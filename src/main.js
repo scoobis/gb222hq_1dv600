@@ -10,3 +10,23 @@ const readline = require('readline').createInterface({
     let userName = name
     readline.close()
   })
+
+  function word() {
+  }
+
+  function readCharacter() {
+
+  }
+
+  function highScore() {
+
+  }
+
+  function menu() {
+
+  }
+
+  function hangman() {
+      
+  }
+
