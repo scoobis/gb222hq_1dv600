@@ -1,9 +1,12 @@
+
 console.log('\x1b[35m', 'Welcome to the hangman project')
 console.log('');
 let words = ['what', 'should', 'mouse']
 let userWord = []
 let life = 7
 let wrongLetters = ''
+let userName = 'Guest123'
+
 gameMenu()
 
 
@@ -24,11 +27,14 @@ function gameMenu() {
       output: process.stdout
     })
     console.log('\x1b[33m', 'Main menu')
-    readline.question(`${'\x1b[36m'}Type: Play or Quit: `, (option) => {
+    readline.question(`${'\x1b[36m'}Type: Play, Quit or Name: `, (option) => {
       // If player want to start game
       if (option == 'Play') {
         readline.close()
         play(word)
+      } else if (option == 'Name') {
+        readline.close()
+        setUserName()
       } else if (option == 'Quit') {
         // Quiting the application
         readline.close()
@@ -184,6 +190,25 @@ return word
   }
 
   function highScore() {
+    let LocalStorage = require('node-localstorage').LocalStorage
+    localStorage = new LocalStorage('./scratch')
+    localStorage.setItem('player1', userName)
+    console.log(localStorage.getItem('player1'))
+  }
 
+  function setUserName() {
+    const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
+    
+    readline.question(`${'\033[33m'}Type a username, or Menu to get back to main menu: `, (name) => {
+      console.log('\033[32m', 'Your new username is ' + name)
+      userName = name
+      setTimeout(() => {
+        gameMenu()
+      }, 1000);
+      readline.close()
+    })
   }
 
