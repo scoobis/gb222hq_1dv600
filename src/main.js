@@ -26,16 +26,23 @@ function gameMenu() {
       input: process.stdin,
       output: process.stdout
     })
-    console.log('\x1b[33m', 'Main menu')
-    readline.question(`${'\x1b[36m'}Type: Play, Quit or Name: `, (option) => {
+    console.log('\033[37m')
+    console.log('--------------------------------------')
+    console.log('------','\033[32m', '"play"','\033[33m', 'to start game','\033[37m','-------')
+    console.log('------','\033[32m','"quit"','\033[33m','to to quit', '\033[37m', '----------')
+    console.log('------','\033[32m','"name"', '\033[33m', 'to set username', '\033[37m', '-----')
+    console.log('--------------------------------------')
+    console.log('----------', '\x1b[35m', 'HANGMAN MENU', '\033[37m', '------------')
+    console.log('--------------------------------------')
+    readline.question(`${'\033[36m'}Input: ${'\033[37m'}`, (option) => {
       // If player want to start game
-      if (option == 'Play') {
+      if (option == 'play') {
         readline.close()
         play(word)
-      } else if (option == 'Name') {
+      } else if (option == 'name') {
         readline.close()
         setUserName()
-      } else if (option == 'Quit') {
+      } else if (option == 'quit') {
         // Quiting the application
         readline.close()
         quit()
@@ -58,7 +65,11 @@ function gameMenu() {
       input: process.stdin,
       output: process.stdout
     })
-    readline.question(`${'\x1b[36m'}Type ${'\x1b[31m'}Yes${'\x1b[36m'} or ${'\x1b[31m'} no ${'\x1b[36m'}`, (option) => {
+    console.log('')
+    console.log('------------------------------------')
+    console.log('--------', '\033[32m', '"yes"', '\033[33m', 'or', '\033[32m', '"no"', '\033[37m', '---------')
+    console.log('------------------------------------', '\033[36m')
+    readline.question(`input: ${'\033[37m'}`, (option) => {
       // Quits the application
       if (option == 'yes') {
         readline.close()
@@ -81,7 +92,6 @@ function gameMenu() {
    * @param {String} word - The word to be guessed
    */
   function play(word) {
-
     //new random word
     if (userWord.length == 0) {
     createuserWord(word)
@@ -91,18 +101,24 @@ function gameMenu() {
     if (checkState()) {
       return
     }
+
+    // extra whitespace
+    console.log('')
+
     const readline = require('readline').createInterface({
       input: process.stdin,
       output: process.stdout
     })
-
-    console.log('\x1b[36m' + 'Your word is: ' + userWord)
-    console.log('life: ' + life + '/7')
-    console.log('Your wrong letters: ' + wrongLetters)
-    console.log('')
-    console.log('\x1b[35m', 'Type Menu to get back to menu')
-    readline.question(`${'\x1b[36m'}Type a lowercase letter: `, (letter) => {
-      if (letter == 'Menu') {
+    console.log('\033[37m')
+    console.log('--------------------------------------')
+    console.log('-----','\033[33m', 'your username:', '\033[36m', userName, '\033[37m', '-----')
+    console.log('-----', '\033[33m', 'life:', '\033[36m', life + '/7', '\033[37m', '-------------------')
+    console.log('----', '\033[32m', '"menu"', '\033[33m', 'to get back to menu', '\033[37m', '---')
+    console.log('-----', '\033[33m', 'Your wrong letters: ', '\033[36m', wrongLetters, '\033[37m')
+    console.log('-----', '\033[33m', 'Your word:', '\033[37m', userWord)
+    console.log('--------------------------------------')
+    readline.question(`${'\x1b[36m'}input: `, (letter) => {
+      if (letter == 'menu') {
         readline.close()
         gameMenu()
         // Checking for misspelling
@@ -148,6 +164,7 @@ function gameMenu() {
     // if the letter is not in the word and adding the letter to a list of wrong letters
     wrongLetters += letter + ' '
     life--
+    console.log('')
    console.log('\x1b[31m', 'Wrong letter, guess again!')
    play(word)
   }
@@ -160,6 +177,7 @@ function gameMenu() {
   function checkState() {
     // if player lost
     if (life == 0) {
+      console.log('')
       console.log('\x1b[31m', 'You got hanged')
       gameMenu()
       return true
@@ -171,6 +189,7 @@ function gameMenu() {
       }
     }
     // will be executed if prev loop when thru
+    console.log('')
     console.log('\x1b[32m', 'You won!')
     gameMenu()
     return true
@@ -201,9 +220,13 @@ return word
       input: process.stdin,
       output: process.stdout
     })
-    
-    readline.question(`${'\033[33m'}Type a username, or Menu to get back to main menu: `, (name) => {
-      console.log('\033[32m', 'Your new username is ' + name)
+    console.log('--------------------------------------')
+    console.log('--------', '\033[33m', 'current username:', '\033[36m', userName, '\033[37m')
+    console.log('----', '\033[33m', 'Type the username you want', '\033[37m', '----')
+    console.log('----', '\033[32m', '"menu"', '\033[33m', 'to get back to menu', '\033[37m', '---')
+    console.log('--------------------------------------', '\033[36m')
+    readline.question(`input: ${'\033[37m'}`, (name) => {
+      console.log('\033[33m', 'Your new username is ' + name)
       userName = name
       setTimeout(() => {
         gameMenu()
