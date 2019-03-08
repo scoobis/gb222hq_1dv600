@@ -1,7 +1,7 @@
 
 console.log('\x1b[35m', 'Welcome to the hangman project')
 console.log('');
-let words = ['what', 'should', 'mouse']
+let words = ['mouse']
 let userWord = []
 let life = 7
 let wrongLetters = ''
@@ -268,8 +268,6 @@ return word
    * @returns - An orderd array with highscores
    */
   function getHighscore() {
-    // Comment because of the test!
-    /*
     let arr = []
     arr[0] = localStorage.getItem('p1Name') + ' ' + localStorage.getItem('p1Life')
     arr[1] = localStorage.getItem('p2Name') + ' ' + localStorage.getItem('p2Life')
@@ -281,7 +279,6 @@ return word
       console.log('pts.' + (i + 1) + ' ' + arr[i])
     }
     return arr
-    */
   }
 
   /**
@@ -333,11 +330,3 @@ return word
     localStorage.setItem('p5Life', 0)
   }
 }
-
-  exports.createuserWord = createuserWord
-  exports.play = play
-  exports.checkLetter = checkLetter
-  exports.checkState = checkState
-  exports.createuserWord = createuserWord
-  exports.getHighscore = getHighscore
-
