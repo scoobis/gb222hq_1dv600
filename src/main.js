@@ -1,11 +1,14 @@
 
 console.log('\x1b[35m', 'Welcome to the hangman project')
 console.log('');
-let words = ['what', 'should', 'mouse']
+let word1 = ['what', 'maybe', 'mouse']
+let word2 = ['working', 'spying', 'queing']
+let word3 = ['algorithms', 'authorized', 'bankrupted']
 let userWord = []
-let life = 7
+let life = 8
 let wrongLetters = ''
 let userName = 'Guest123'
+let difficulity = 1
 
 let LocalStorage = require('node-localstorage').LocalStorage
     localStorage = new LocalStorage('./scratch')
@@ -23,7 +26,7 @@ gameMenu()
 function gameMenu() {
 
 
-    let word = setup()
+    let word = setup(difficulity)
     userWord = []
     life = 7
     wrongLetters = ''
@@ -38,23 +41,28 @@ function gameMenu() {
     console.log('------','\033[32m','"quit"','\033[33m','to to quit', '\033[37m', '----------')
     console.log('------','\033[32m','"name"', '\033[33m', 'to set username', '\033[37m', '-----')
     console.log('------','\033[32m','"highscore"', '\033[33m', 'to see hihscore', '\033[37m', '')
+    console.log('------','\033[32m','"difficulty"', '\033[33m', 'to set difficulty', '\033[37m', '')
     console.log('--------------------------------------')
     console.log('----------', '\x1b[35m', 'HANGMAN MENU', '\033[37m', '------------')
     console.log('--------------------------------------')
     readline.question(`${'\033[36m'}Input: ${'\033[37m'}`, (option) => {
       // If player want to start game
-      if (option == 'play') {
+      if (option === 'play') {
         readline.close()
         play(word)
-      } else if (option == 'name') {
+      } else if (option === 'name') {
         readline.close()
         setUserName()
-      } else if (option == 'quit') {
+      } else if (option === 'quit') {
         // Quiting the application
         readline.close()
         quit()
-      } else if (option == 'highscore') {
+      } else if (option === 'highscore') {
+        readline.close()
         getHighscore()
+      } else if (option === 'difficulty') {
+        readline.close()
+        setDifficulty()
       } else  {
         // misspelling
         readline.close()
@@ -212,11 +220,18 @@ function gameMenu() {
    *
    * @returns - the word that the user will guess
    */
-  function setup() {
+  function setup(difficulty) {
     // picking random nr to be picked from the array of words
-let rand = Math.random() * words.length;
+let rand = Math.random() * word1.length;
 rand = Math.floor(rand)
-let word = words[rand];
+let word = ''
+if (difficulty === 1) {
+  word = word1[rand];
+} else if (difficulty === 2) {
+    word = word2[rand]
+} else if (difficulty === 3) {
+    word = word3[rand]
+}
 return word
   }
 
@@ -268,8 +283,6 @@ return word
    * @returns - An orderd array with highscores
    */
   function getHighscore() {
-    // Comment because of the test!
-    /*
     let arr = []
     arr[0] = localStorage.getItem('p1Name') + ' ' + localStorage.getItem('p1Life')
     arr[1] = localStorage.getItem('p2Name') + ' ' + localStorage.getItem('p2Life')
@@ -280,8 +293,8 @@ return word
     for (let i = 0; i < 5; i++) {
       console.log('pts.' + (i + 1) + ' ' + arr[i])
     }
+    gameMenu()
     return arr
-    */
   }
 
   /**
@@ -334,10 +347,44 @@ return word
   }
 }
 
+function setDifficulty() {
+  console.log('--------------------------------------')
+  console.log('', '\033[32m', '"1", "2" or "3"', '\033[33m', 'to set difficulty', '\033[37m', '')
+  console.log('---------', '\033[32m', '"1"', '\033[33m', 'is default', '\033[37m', '----------')
+  console.log('--------------------------------------')
+
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+
+  readline.question(`${'\x1b[36m'}input: `, (option) => {
+    readDifficulity(option)
+    readline.close()
+    gameMenu()
+  })
+}
+
+function readDifficulity(option) {
+  if (option === '1') {
+    difficulity = 1
+  } else if (option === '2') {
+    difficulity = 2
+  } else if (option === '3') {
+    difficulity = 3
+  } else {
+    console.log('\x1b[31m', 'Make sure you spell it as described!')
+    setDifficulty()
+  }
+  return difficulity
+}
   exports.createuserWord = createuserWord
   exports.play = play
   exports.checkLetter = checkLetter
   exports.checkState = checkState
   exports.createuserWord = createuserWord
   exports.getHighscore = getHighscore
+  exports.setDifficulty = setDifficulty
+  exports.readDifficulity = readDifficulity
+  exports.setup = setup
 

@@ -50,3 +50,49 @@ describe('Get highscore', () => {
         assert.equal(lengthofScore, 5)
     })
 })
+
+describe('set Difficulity', () => {
+    // should change value of difficulty to 1
+    it ('Should change difficult value to 1', () => {
+        let difficulty = app.readDifficulity('1')
+        assert.equal(difficulty, 1)
+        
+    })
+    // should change value of difficulity to 2
+    it ('should change difficulty value to 2', () => {
+        let difficulty = app.readDifficulity('2')
+        assert.equal(difficulty, 2)
+    })
+    // should change value of difficulty to 3
+    it ('should change difficulty value to 3', () => {
+        let difficulty = app.readDifficulity('3')
+        assert.equal(difficulty, 3)
+    })
+})
+
+describe('set Difficulity', () => {
+     // the length of difficulty 1 should be 4 or 5
+    it ('difficulty 1 should have length 4 or 5', () => {
+        let word = app.setup(1)
+        if (word.length === 4) {
+        assert.equal(word.length, 4)
+        } else {
+            assert.equal(word.length, 5)
+        }
+        
+    })
+    // the length of difficulty 2 should be 6 or 7
+    it ('difficulty 2 should have length 6 or 7', () => {
+        let word = app.setup(2)
+        if (word.length === 6) {
+            assert.equal(word.length, 6)
+        } else {
+            assert.equal(word.length, 7)
+        }
+    })
+     // the length of difficulty 3 should be 10
+    it ('difficulty 3 should have length 10', () => {
+        let word = app.setup(3)
+        assert.equal(word.length, 10)
+    })
+})
